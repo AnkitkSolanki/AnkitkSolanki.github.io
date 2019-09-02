@@ -1,1 +1,172 @@
-<h1>Hello</h1>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Ankit Solanki">
+        <link rel="shortcut icon" href="favicon.ico">
+
+        <title>Ankit Solanki</title>
+
+        <style type="text/css">
+            @import url("https://use.typekit.net/zli1tzj.css?v=2");
+            :root {
+                --color: #333;
+                --background-color: #fff;
+                --link-color: #0052cc;
+                --header-color: #121212;
+                --hr-bar: linear-gradient(to right, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0.50), rgba(33, 33, 33, 0));
+            }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background-color: var(--background-color);
+                color: var(--color);
+                font-family: "source-serif-pro", serif;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1.5;
+                width: 100%;
+                max-width: 39rem;
+                margin: 0 auto;
+                padding: 1rem;
+                transition: background-color 0.5s ease-out;
+            }
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+            }
+            a:hover { text-decoration: underline; }
+            h1, h2 {
+                color: var(--header-color);
+                margin-bottom: 0;
+            }
+            h1 { cursor: pointer; }
+            p { margin-top: 0; }
+            header { margin-top: 2rem; }
+            header p { font-style: italic; }
+            img { border-radius: 50%; }
+            hr {
+                border: 0;
+                height: 1px;
+                background-image: var(--hr-bar)
+            }
+            th { text-align: left; }
+            ul {
+                margin-top: 0;
+                padding-left: 0;
+            }
+            @media only screen and (max-width: 600px) {
+                body { font-size: 1.1rem; }
+                th,
+                td {
+                    display: block;
+                }
+                ul { padding-left: 1rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="https://avatars0.githubusercontent.com/u/37572129?s=460&v=4" height="150" width="150" alt="Ankit Solanki">
+            <h1 data-header-color="#fff" data-bg-color="#212121" data-link-color="#ebcb8b" data-color="#93979e" data-hr-bar="linear-gradient(to right, rgba(232, 232, 232, 0), rgba(232, 232, 232, 0.50), rgba(232, 232, 232, 0))">
+                Hi! I'm Ankit.
+            </h1>
+            <p>
+                Software Engineer at <a href="https://www.varianceinfotech.com/" target="_blank">Variance Infotech Pvt. Ltd.</a>
+            </p>
+        </header>
+
+        <hr>
+
+        <section>
+            <h2>Current Employment</h2>
+            <p>As of Aug 2019, I work at <a href="https://www.varianceinfotech.com/">Variance</a>. (I'm working here since Sep 2015)</p>
+
+            <h2>Education</h2>
+            <p>I received bachelor's degree in <em>Computer Engineering</em> from the <a href="http://ldce.ac.in/" target="_blank">C U Shah university, Wadhawan</a> in 2015.</p>
+
+            <h2>Projects</h2>
+            <ul>
+                <li><a href="https://www.recordlinc.com">Recordlinc</a>: Online PMS system.</li>
+            </ul>
+
+            <!-- <h2>Achievements</h2> -->
+            <!-- <ul> -->
+                <!-- <li> -->
+                    <!-- Completed course on <a href="https://university.mongodb.com/course_completion/f20e6739-49e7-43af-8eb8-f5c757a1/printable">MongoDB for Node.js Developers</a> from MongoDB University, Jul 2018. -->
+                <!-- </li> -->
+            <!-- </ul> -->
+
+            <h2>Details</h2>
+            <table>
+                <tr>
+                    <th>Name:</th>
+                    <td>Ankit Solanki</td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td>Gujarat, India</td>
+                </tr>
+                <tr>
+                    <th>Languages:</th>
+                    <td>Gujarati, Hindi & English</td>
+                </tr>
+                <tr>
+                    <th>Interests:</th>
+                    <td>Education, Programming</td>
+                </tr>
+                <tr>
+                    <th>Hobbies & Activities:</th>
+                    <td>Reading | Walking, Cricket</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><a href="mailto:ankitsolanki92@gmail.com">ankitsolanki92@gmail.com</a></td>
+                </tr>
+                <tr>
+                    <th>Other Accounts:</th>
+                    <td>
+                        <a href="https://github.com/AnkitkSolanki" target="_blank">GitHub</a>,
+                        <a href="https://www.linkedin.com/in/ankit-solanki-4404/" target="_blank">LinkedIn</a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <hr>
+        <footer>&copy; 2019-20 Ankit Solanki.</footer>
+
+        <script>
+
+            const apply_theme = (colors) => {
+                const root = document.querySelector(':root');
+                const colors_name = Object.keys(colors);
+                colors_name.forEach(color => {
+                    root.style.setProperty(color, colors[color]);
+                });
+            }
+
+            document.querySelector('h1').addEventListener('click', (e) => {
+                apply_theme({
+                    '--color': e.target.getAttribute('data-color'),
+                    '--header-color': e.target.getAttribute('data-header-color'),
+                    '--background-color': e.target.getAttribute('data-bg-color'),
+                    '--link-color': e.target.getAttribute('data-link-color'),
+                    '--hr-bar': e.target.getAttribute('data-hr-bar')
+                });
+            });
+
+
+        </script>
+    </body>
+</html>
