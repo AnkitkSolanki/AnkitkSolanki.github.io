@@ -7,11 +7,10 @@
 <li class="has-line-data" data-line-start="6" data-line-end="7">Quick find <strong>App Manager</strong></li>
 <li class="has-line-data" data-line-start="7" data-line-end="8">Click on <strong>New Connected App</strong></li>
 <li class="has-line-data" data-line-start="8" data-line-end="9"><a href="">Image over Here</a></li>
-<li class="has-line-data" data-line-start="9" data-line-end="11">In Name, type <strong>SFIntegration</strong>, and supply a mandatory contact email<br>
-Make sure Enable OAuth settings is ticked.</li>
-<li class="has-line-data" data-line-start="11" data-line-end="12">In Callback URL, type in a dummy https URL (something like <a href="https://dummy.com">https://dummy.com</a>). We’re going to need a callback URL. Callback URL is used for other types of OAuth flows that we will explore in a future post.</li>
-<li class="has-line-data" data-line-start="12" data-line-end="13">In Selected OAuth scopes, Add <strong>Access and manage your data (api)</strong></li>
-<li class="has-line-data" data-line-start="13" data-line-end="14">Click <strong>Save</strong>. We will get a message telling us to wait a few minutes before using the app.</li>
+<li class="has-line-data" data-line-start="9" data-line-end="11">In Name, type <strong>SFIntegration</strong>, and supply a mandatory contact email Make sure Enable OAuth settings is ticked.</li>
+<li class="has-line-data" data-line-start="11" data-line-end="12">In Callback URL, type in a dummy https URL (e.g <a href="https://dummy.com">https://dummy.com</a>). We’re going to need a callback URL. Callback URL is used for other types of OAuth flows that we will explore in a future post.</li>
+<li class="has-line-data" data-line-start="12" data-line-end="13">In Selected OAuth scopes, Add <strong>Access and manage your data (API)</strong></li>
+<li class="has-line-data" data-line-start="13" data-line-end="14">Click <strong>Save</strong>. We will get a message telling us to wait for a few minutes before using the app.</li>
 <li class="has-line-data" data-line-start="14" data-line-end="15">Click <strong>Continue</strong>. The information for our connected app will be displayed. Take note of the <strong>Consumer Key</strong>, which we’ll use in the following steps.</li>
 <li class="has-line-data" data-line-start="15" data-line-end="16">Click on the <strong>Click to Reveal</strong> link next to Consumer Secret. Write down the consumer secret that is displayed, as we’ll use it in the following steps.</li>
 </ul>
@@ -19,7 +18,7 @@ Make sure Enable OAuth settings is ticked.</li>
 <h4 class="code-line" data-line-start=19 data-line-end=20 ><a id="Step_2_Create_a_new_Net_Web_Project_19"></a>Step 2: Create a new .Net Web Project</h4>
 <ul>
 <li class="has-line-data" data-line-start="20" data-line-end="21">We now have all the information we need to start coding our client app. In VisualStudio, create a new Web project, and add a new class, which we’ll call <code>SalesforceClient</code>.</li>
-<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for the purposes of this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
+<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
 <li class="has-line-data" data-line-start="22" data-line-end="23">First, we will call the salesforce API for the Authentication. For that, we are using 2 different URL if we are using <code>Production</code> salesforce environment then we need to call <a href="https://login.salesforce.com/services/oauth2/authorize">https://login.salesforce.com/services/oauth2/authorize</a> If we are using the <code>Sandbox</code> salesforce environment then we need to call <a href="https://test.salesforce.com/services/oauth2/authorize">https://test.salesforce.com/services/oauth2/authorize</a></li>
 <li class="has-line-data" data-line-start="23" data-line-end="29">For getting the Code of our connected URL we need to call <code>FormatAuthUrl</code>. We need to send 4 parameters to get Url.
 <ol>
@@ -73,7 +72,7 @@ InstanceUrl = values[<span class="hljs-string">"instance_url"</span>];
 <p class="has-line-data" data-line-start="67" data-line-end="69">That’s it :-) We have authenticate our Salesforce App with .Net web project.<br>
 Cheers!</p>
 <hr>
-<h4 class="code-line" data-line-start=70 data-line-end=71 ><a id="Conslusion_70"></a>Conslusion</h4>
+<h4 class="code-line" data-line-start=70 data-line-end=71 ><a id="Conslusion_70"></a>Conclusion</h4>
 <p class="has-line-data" data-line-start="71" data-line-end="72">We’ve seen that calling the REST API from .Net is quite easy, especially with the help of the <code>HttpClient</code> class. The main challenges are around authenticating with Salesforce, the complexities of OAuth and the concept of the connected app.</p>
 <hr>
 <h4 class="code-line" data-line-start=74 data-line-end=75 ><a id="Useful_Resources_74"></a>Useful Resources</h4>
