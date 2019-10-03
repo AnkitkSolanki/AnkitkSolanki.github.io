@@ -7,8 +7,9 @@
 <li class="has-line-data" data-line-start="6" data-line-end="7">Quick find <strong>App Manager</strong></li>
 <li class="has-line-data" data-line-start="7" data-line-end="8">Click on <strong>New Connected App</strong></li>
 <li class="has-line-data" data-line-start="8" data-line-end="9"><a href="">Image over Here</a></li>
-<li class="has-line-data" data-line-start="9" data-line-end="11">In Name, type <strong>SFIntegration</strong>, and supply a mandatory contact email Make sure Enable OAuth settings is ticked.</li>
-<li class="has-line-data" data-line-start="11" data-line-end="12">In Callback URL, type in a dummy https URL (e.g <a href="https://dummy.com">https://dummy.com</a>). We’re going to need a callback URL. Callback URL is used for other types of OAuth flows.</li>
+<li class="has-line-data" data-line-start="9" data-line-end="11">In Name, type <strong>SFIntegration</strong>, and supply a mandatory <strong>Contact Email</strong><br>
+Make sure Enable OAuth settings is ticked.</li>
+<li class="has-line-data" data-line-start="11" data-line-end="12">In Callback URL, type your web project URL with https (e.g <a href="https://yourappname.com">https://yourappname.com</a>). Callback URL is used for OAuth flows.</li>
 <li class="has-line-data" data-line-start="12" data-line-end="13">In Selected OAuth scopes, Add <strong>Access and manage your data (API)</strong></li>
 <li class="has-line-data" data-line-start="13" data-line-end="14">Click <strong>Save</strong>. We will get a message telling us to wait for a few minutes before using the app.</li>
 <li class="has-line-data" data-line-start="14" data-line-end="15">Click <strong>Continue</strong>. The information for our connected app will be displayed. Take note of the <strong>Consumer Key</strong>, which we’ll use in the following steps.</li>
@@ -18,39 +19,34 @@
 <h4 class="code-line" data-line-start=19 data-line-end=20 ><a id="Step_2_Create_a_new_Net_Web_Project_19"></a>Step 2: Create a new .Net Web Project</h4>
 <ul>
 <li class="has-line-data" data-line-start="20" data-line-end="21">We now have all the information we need to start coding our client app. In VisualStudio, create a new Web project, and add a new class, which we’ll call <code>SalesforceClient</code>.</li>
-<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
-<li class="has-line-data" data-line-start="22" data-line-end="23">First, we will call the salesforce API for the Authentication. For that, we are using 2 different URL if we are using <code>Production</code> salesforce environment then we need to call <a href="https://login.salesforce.com/services/oauth2/authorize">https://login.salesforce.com/services/oauth2/authorize</a> If we are using the <code>Sandbox</code> salesforce environment then we need to call <a href="https://test.salesforce.com/services/oauth2/authorize">https://test.salesforce.com/services/oauth2/authorize</a></li>
-<li class="has-line-data" data-line-start="23" data-line-end="29">For getting the Code of our connected URL we need to call <code>FormatAuthUrl</code>. We need to send 4 parameters to get Url.
-<ol>
-<li class="has-line-data" data-line-start="24" data-line-end="25">Authorize URL (Production / SendBox).</li>
-<li class="has-line-data" data-line-start="25" data-line-end="26">ResponseType (Code / Token)</li>
-<li class="has-line-data" data-line-start="26" data-line-end="27">Client ID</li>
-<li class="has-line-data" data-line-start="27" data-line-end="29">ReturnURL</li>
-</ol>
-</li>
+<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for the purposes of this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
+<li class="has-line-data" data-line-start="22" data-line-end="23">First, we will call the salesforce API for the Authentication. Once your customers’ data is recorded, it will be redirected to a <a href="http://Salesforce.com">Salesforce.com</a> auth endpoint and you will have access granted through an endpoint. The idea is to transfer their Salesforce data on their behalf.</li>
+<li class="has-line-data" data-line-start="23" data-line-end="24">After a successful authentication with an endpoint, Salesforce will send a response with an Access and Refresh token. The Access token has an expiration date of 15 minutes and the Refresh token helps you get in when the Access is expired.</li>
 </ul>
-<hr>
-<h4 class="code-line" data-line-start=30 data-line-end=31 ><a id="Setup_3_Authentication_with_Connected_App_30"></a>Setup 3: Authentication with Connected App</h4>
+<pre><code class="has-line-data" data-line-start="25" data-line-end="27">https://login.salesforce.com/services/oauth2/authorize?response_type=code&amp;client_id=YOURCONSUMERID&amp;redirect_uri=https://www.yourappname.com/salesforce/callback
+</code></pre>
 <ul>
-<li class="has-line-data" data-line-start="31" data-line-end="35">Once we call the Authorization it will return on our Authentication URL and it will return 3 parameters.
-<ol>
-<li class="has-line-data" data-line-start="32" data-line-end="33">code</li>
-<li class="has-line-data" data-line-start="33" data-line-end="34">display</li>
-<li class="has-line-data" data-line-start="34" data-line-end="35">error</li>
-</ol>
-</li>
-<li class="has-line-data" data-line-start="35" data-line-end="37">We can now create the <code>Login()</code> method to authenticate onto our connected app. Salesforce requires us to use <code>FormUrlEncodedContent</code> or it will complain of a bad request.</li>
+<li class="has-line-data" data-line-start="27" data-line-end="28">That’s the request you will make as an initial authorization. The client_id will be your consumer ID from the connected app and the redirect_uri will be the Callback URL. When you have a successful response, your user will login and authenticate.</li>
+<li class="has-line-data" data-line-start="28" data-line-end="29">Once the data is authorized, Salesforce will add an authorization code to the URL, creating a request that looks like this:</li>
 </ul>
-<pre><code class="has-line-data" data-line-start="38" data-line-end="56" class="language-cs">HttpClient client = <span class="hljs-keyword">new</span> HttpClient();
+<pre><code class="has-line-data" data-line-start="30" data-line-end="32">https://www.yourappname.com/salesforce/callback?code=aWekysIEeqM9PiThEfm0Cnr6MoLIfwWyRJcqOqHdF8f9INokharAS09ia7UNP6RiVScerfhc4w%3D%3D
+</code></pre>
+<hr>
+<h4 class="code-line" data-line-start=34 data-line-end=35 ><a id="Setup_3_Authentication_with_Connected_App_34"></a>Setup 3: Authentication with Connected App</h4>
+<ul>
+<li class="has-line-data" data-line-start="35" data-line-end="37">We can now create the <code>callback()</code> method to authenticate onto our connected app. This method accept parameter code.</li>
+</ul>
+<p class="has-line-data" data-line-start="37" data-line-end="38"><em>Note: Salesforce requires us to use <code>FormUrlEncodedContent</code> or it will complain of a bad request.</em></p>
+<pre><code class="has-line-data" data-line-start="40" data-line-end="58" class="language-cs">HttpClient client = <span class="hljs-keyword">new</span> HttpClient();
 <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">new</span> HttpResponseMessage();
 ServicePointManager.Expect100Continue = <span class="hljs-keyword">true</span>;
 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
 <span class="hljs-keyword">var</span> content = <span class="hljs-keyword">new</span> FormUrlEncodedContent(<span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">string</span>&gt;
 {
     {<span class="hljs-string">"grant_type"</span>, <span class="hljs-string">"authorization_code "</span>},
-    {<span class="hljs-string">"client_id"</span>, CLIENT_ID}, <span class="hljs-comment">//We will recevied from connected app</span>
-    {<span class="hljs-string">"client_secret"</span>, CLIENT_SECRET}, <span class="hljs-comment">//We will recevied from connected app</span>
-    { <span class="hljs-string">"redirect_uri"</span>, CURRENT_WEBAPP_URL+<span class="hljs-string">"/SalesforceCallBack"</span>}, <span class="hljs-comment">//Callback URL</span>
+    {<span class="hljs-string">"client_id"</span>, YOUR_CONSUMER_Id}, <span class="hljs-comment">//We will recevied from connected app</span>
+    {<span class="hljs-string">"client_secret"</span>, YOUR_CONSUMER_SECRET}, <span class="hljs-comment">//We will recevied from connected app</span>
+    { <span class="hljs-string">"redirect_uri"</span>, YOUR_WEBAPP_URL+<span class="hljs-string">"/SalesforceCallBack"</span>}, <span class="hljs-comment">//Callback URL</span>
     {<span class="hljs-string">"code"</span>,Code } <span class="hljs-comment">//We will recevied while calling the Authorization</span>
 });
 response = client.PostAsync(Url, content).Result;
@@ -59,8 +55,11 @@ response = client.PostAsync(Url, content).Result;
 AuthToken = values[<span class="hljs-string">"access_token"</span>];
 InstanceUrl = values[<span class="hljs-string">"instance_url"</span>];
 </code></pre>
-<p class="has-line-data" data-line-start="56" data-line-end="57">The response to our authentication request a JSON object containing the authentication token and the instance URL (where to direct all subsequent queries). We store these in the properties created above.</p>
-<pre><code class="has-line-data" data-line-start="58" data-line-end="67"> Response: {
+<p class="has-line-data" data-line-start="58" data-line-end="59">Let’s see an example request:</p>
+<pre><code class="has-line-data" data-line-start="60" data-line-end="62">login.salesforce.com/services/oauth2/token?grant_type=authorization_code&amp;redirect_uri=https://www.yourappname.com/salesforce/callback&amp;client_id=YOUR_CONSUMER_ID&amp;client_secret=YOUR_CONSUMER_SECRET&amp;code=aWekysIEeqM9PiThEfm0Cnr6MoLIfwWyRJcqOqHdF8f9INokharAS09ia7UNP6RiVScerfhc4w%3D%3D
+</code></pre>
+<p class="has-line-data" data-line-start="62" data-line-end="63">The response to our authentication request a JSON object containing the authentication token and the instance URL (where to direct all subsequent queries). We store these in the properties created above.</p>
+<pre><code class="has-line-data" data-line-start="64" data-line-end="73"> Response: {
   &quot;access_token&quot; : &quot;00D2v000001h1le!ARcAQDI9sqDLgzHr4zSZDzltr...&quot;,
   &quot;instance_url&quot; : &quot;https://varianceinfotech.salesforce.com&quot;,
   &quot;id&quot; : &quot;https://login.salesforce.com/id/00D2v000001h1le7EAE/005...&quot;,
@@ -69,17 +68,20 @@ InstanceUrl = values[<span class="hljs-string">"instance_url"</span>];
   &quot;signature&quot; : &quot;TmoeKs2s70SgVNxQSay...&quot;
 }
 </code></pre>
-<p class="has-line-data" data-line-start="67" data-line-end="69">That’s it :-) We have authenticate our Salesforce App with .Net web project.<br>
+<p class="has-line-data" data-line-start="73" data-line-end="74">Refersh token example call:</p>
+<pre><code class="has-line-data" data-line-start="75" data-line-end="77">https://login.salesforce.com/services/oauth2/token?grant_type=refresh_token&amp;client_id=YOUR_CONSUMER__ID&amp;client_secret=YOUR_CONSUMER__SECRET&amp;refresh_token=YOUR_REFRESH_TOKEN
+</code></pre>
+<p class="has-line-data" data-line-start="77" data-line-end="79">That’s it :-) We have authenticate our Salesforce App with .Net web project.<br>
 Cheers!</p>
 <hr>
-<h4 class="code-line" data-line-start=70 data-line-end=71 ><a id="Conslusion_70"></a>Conclusion</h4>
-<p class="has-line-data" data-line-start="71" data-line-end="72">We’ve seen that calling the REST API from .Net is quite easy, especially with the help of the <code>HttpClient</code> class. The main challenges are around authenticating with Salesforce, the complexities of OAuth and the concept of the connected app.</p>
+<h4 class="code-line" data-line-start=80 data-line-end=81 ><a id="Conslusion_80"></a>Conslusion</h4>
+<p class="has-line-data" data-line-start="81" data-line-end="82">We’ve seen that calling the REST API from .Net is quite easy, especially with the help of the <code>HttpClient</code> class. The main challenges are around authenticating with Salesforce, the complexities of OAuth and the concept of the connected app.</p>
 <hr>
-<h4 class="code-line" data-line-start=74 data-line-end=75 ><a id="Useful_Resources_74"></a>Useful Resources</h4>
+<h4 class="code-line" data-line-start=84 data-line-end=85 ><a id="Useful_Resources_84"></a>Useful Resources</h4>
 <ul>
-<li class="has-line-data" data-line-start="75" data-line-end="76"><a href="https://developer.salesforce.com/page/REST_API">Salesforce REST API</a></li>
-<li class="has-line-data" data-line-start="76" data-line-end="77"><a href="https://developer.salesforce.com/page/Consuming_Force.com_SOAP_and_REST_Web_Services_from_.NET_Applications#Querying_and_Creating_Objects_Via_REST_API">Consuming Force.com Web Services with .Net</a></li>
-<li class="has-line-data" data-line-start="77" data-line-end="78">The authoritative source for OAuth protocol is <a href="https://tools.ietf.org/html/rfc6749">this RFC</a>. It full of information but a bit of a dry read.</li>
+<li class="has-line-data" data-line-start="85" data-line-end="86"><a href="https://developer.salesforce.com/page/REST_API">Salesforce REST API</a></li>
+<li class="has-line-data" data-line-start="86" data-line-end="87"><a href="https://developer.salesforce.com/page/Consuming_Force.com_SOAP_and_REST_Web_Services_from_.NET_Applications#Querying_and_Creating_Objects_Via_REST_API">Consuming Force.com Web Services with .Net</a></li>
+<li class="has-line-data" data-line-start="87" data-line-end="88">The authoritative source for OAuth protocol is <a href="https://tools.ietf.org/html/rfc6749">this RFC</a>. It full of information but a bit of a dry read.</li>
 </ul>
 
 </body></html>
