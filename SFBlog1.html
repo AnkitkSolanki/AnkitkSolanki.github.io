@@ -19,9 +19,9 @@ Make sure Enable OAuth settings is ticked.</li>
 <h4 class="code-line" data-line-start=19 data-line-end=20 ><a id="Step_2_Create_a_new_Net_Web_Project_19"></a>Step 2: Create a new .Net Web Project</h4>
 <ul>
 <li class="has-line-data" data-line-start="20" data-line-end="21">We now have all the information we need to start coding our client app. In VisualStudio, create a new Web project, and add a new class, which we’ll call <code>SalesforceClient</code>.</li>
-<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for the purposes of this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
+<li class="has-line-data" data-line-start="21" data-line-end="22">We will be using the new <code>HttpClient</code> class, which is the easiest way to make HTTP callouts. It offers great support for asynchronous calls, but for this post, we’ll be making the calls synchronous by calling the Result keyword.</li>
 <li class="has-line-data" data-line-start="22" data-line-end="23">First, we will call the salesforce API for the Authentication. Once your customers’ data is recorded, it will be redirected to a <a href="http://Salesforce.com">Salesforce.com</a> auth endpoint and you will have access granted through an endpoint. The idea is to transfer their Salesforce data on their behalf.</li>
-<li class="has-line-data" data-line-start="23" data-line-end="24">After a successful authentication with an endpoint, Salesforce will send a response with an Access and Refresh token. The Access token has an expiration date of 15 minutes and the Refresh token helps you get in when the Access is expired.</li>
+<li class="has-line-data" data-line-start="23" data-line-end="24">After successful authentication with an endpoint, Salesforce will send a response with an Access and Refresh token. The Access token has an expiration date of 15 minutes and the Refresh token helps you get in when the Access is expired.</li>
 </ul>
 <pre><code class="has-line-data" data-line-start="25" data-line-end="27">https://login.salesforce.com/services/oauth2/authorize?response_type=code&amp;client_id=YOURCONSUMERID&amp;redirect_uri=https://www.yourappname.com/salesforce/callback
 </code></pre>
@@ -34,7 +34,7 @@ Make sure Enable OAuth settings is ticked.</li>
 <hr>
 <h4 class="code-line" data-line-start=34 data-line-end=35 ><a id="Setup_3_Authentication_with_Connected_App_34"></a>Setup 3: Authentication with Connected App</h4>
 <ul>
-<li class="has-line-data" data-line-start="35" data-line-end="37">We can now create the <code>callback()</code> method to authenticate onto our connected app. This method accept parameter code.</li>
+<li class="has-line-data" data-line-start="35" data-line-end="37">We can now create the <code>callback()</code> method to authenticate onto our connected app. This method accepts the parameter code.</li>
 </ul>
 <p class="has-line-data" data-line-start="37" data-line-end="38"><em>Note: Salesforce requires us to use <code>FormUrlEncodedContent</code> or it will complain of a bad request.</em></p>
 <pre><code class="has-line-data" data-line-start="40" data-line-end="58" class="language-cs">HttpClient client = <span class="hljs-keyword">new</span> HttpClient();
@@ -74,7 +74,7 @@ InstanceUrl = values[<span class="hljs-string">"instance_url"</span>];
 <p class="has-line-data" data-line-start="77" data-line-end="79">That’s it :-) We have authenticate our Salesforce App with .Net web project.<br>
 Cheers!</p>
 <hr>
-<h4 class="code-line" data-line-start=80 data-line-end=81 ><a id="Conslusion_80"></a>Conslusion</h4>
+<h4 class="code-line" data-line-start=80 data-line-end=81 ><a id="Conslusion_80"></a>Conclusion</h4>
 <p class="has-line-data" data-line-start="81" data-line-end="82">We’ve seen that calling the REST API from .Net is quite easy, especially with the help of the <code>HttpClient</code> class. The main challenges are around authenticating with Salesforce, the complexities of OAuth and the concept of the connected app.</p>
 <hr>
 <h4 class="code-line" data-line-start=84 data-line-end=85 ><a id="Useful_Resources_84"></a>Useful Resources</h4>
