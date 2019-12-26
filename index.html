@@ -90,7 +90,7 @@
 
         <section>
             <h2>Current Employment</h2>
-            <p>As of Sep 2019, I work at <a href="https://www.varianceinfotech.com/">Variance</a>. (I'm working here since Sep 2015)</p>
+            <p>As of </p><p id="month">Sep</p><p> 2019, I work at <a href="https://www.varianceinfotech.com/">Variance</a>. (I'm working here since Sep 2015)</p>
 
             <h2>Education</h2>
             <p>I received bachelor's degree in <em>Computer Engineering</em> from the SIEM in 2015.</p>
@@ -172,8 +172,55 @@
                     '--hr-bar': e.target.getAttribute('data-hr-bar')
                 });
             });
+		
+			function getMonthName(m) {
+				switch (m) {
+					case 0:
+						month = "Jan";
+						break;
+					case 1:
+						month = "Feb";
+						break;
+					case 2:
+						month = "Mar";
+						break;
+					case 3:
+						month = "Apr";
+						break;
+					case 4:
+						month = "May";
+						break;
+					case 5:
+						month = "Jun";
+						break;
+					case 6:
+						month = "Jul";
+						break;
+					case 7:
+						month = "Aug";
+						break;
+					case 8:
+						month = "Sep";
+						break;
+					case 9:
+						month = "Oct";
+						break;
+					case 10:
+						month = "Nov";
+						break;
+					case  11:
+						month = "Dec";
+					
+				}
+				return month;
+			}
 
-
+			function myFunction() {
+			  var d = new Date();
+			  var n = d.getMonth();
+			  var m = getMonthName(n)
+			  document.getElementById("month").innerHTML = m;
+			}
         </script>
     </body>
 </html>
